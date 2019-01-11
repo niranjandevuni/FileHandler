@@ -1,4 +1,4 @@
-package com.prokarma.csv.beans;
+package com.prokarma.csv.configuration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,8 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.prokarma.csv.configuration.Configuration;
-import com.prokarma.csv.configuration.Constants;
+import com.prokarma.csv.beans.Employee;
 
 @Component
 public class FileHandler {

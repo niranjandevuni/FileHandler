@@ -1,4 +1,4 @@
-package com.prokarma.csv.configuration;
+package com.prokarma.csv.exception;
 
 import java.util.Date;
 

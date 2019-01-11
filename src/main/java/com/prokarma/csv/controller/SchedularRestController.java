@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prokarma.csv.beans.Employee;
-import com.prokarma.csv.beans.FileHandler;
+import com.prokarma.csv.configuration.FileHandler;
 import com.prokarma.csv.service.EmployeeService;
 
 import io.swagger.annotations.Api;
