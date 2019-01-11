@@ -1,4 +1,4 @@
-/*package com.prokarma.Test;
+package com.prokarma.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -21,61 +21,58 @@ import com.prokarma.csv.service.EmployeeServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class EmployeeServiceImplTest {
-	List<Employee> employees = Arrays.asList(new Employee(1, "Mr", "Niranjan", "Devuni", "", 1100, "Male", "Uppal", "HYD", true));
-	
-	@Mock
-	private EmployeeDAO employeeDAO;
-	
-	
+	List<Employee> employees = Arrays
+			.asList(new Employee(1, "Mr", "Niranjan", "Devuni", "", 1100, "Male", "Uppal", "HYD", true));
+
 	@InjectMocks
 	private EmployeeServiceImpl employeeServiceImpl;
-	
+
+	@Mock
+	private EmployeeDAO employeeDAO;
+
 	@Before
-	public void setup(){
+	public void setup() {
 		MockitoAnnotations.initMocks(this);
 	}
-	
-	private String filePath="src//main//resources//file//Employee.csv";
-	
+
+	private String filePath = "src//main//resources//file//Employee.csv";
+
 	@Test
-	public void saveCsvEmployeeDataForSaving(){
-		
-		when(employeeDAO.saveCsvEmployeeData(employees,filePath)).thenReturn(1);
-		int result = employeeServiceImpl.saveCsvEmployeeData(employees, filePath);
+	public void saveDataTest() {
+
+		when(employeeDAO.saveData(employees, filePath)).thenReturn(1);
+		int result = employeeServiceImpl.saveData(employees, filePath);
 		assertEquals(1, result);
-		
 	}
-	
-	
+
 	@Test
-	public void saveCsvEmployeeDataForEmptyList(){
-		
-		when(employeeDAO.saveCsvEmployeeData(null,filePath)).thenReturn(0);
-		int result = employeeServiceImpl.saveCsvEmployeeData(null,filePath);
+	public void saveDataForEmptyListTest() {
+
+		when(employeeDAO.saveData(null, filePath)).thenReturn(0);
+		int result = employeeServiceImpl.saveData(null, filePath);
 		assertEquals(0, result);
 	}
-	
+
 	@Test
-	public void saveCsvEmployeeDataForEmptyFilePath(){
-		
-		when(employeeDAO.saveCsvEmployeeData(employees,"")).thenReturn(0);
-		int result = employeeServiceImpl.saveCsvEmployeeData(employees,"");
+	public void saveDataForEmptyFilePathTest() {
+
+		when(employeeDAO.saveData(employees, "")).thenReturn(0);
+		int result = employeeServiceImpl.saveData(employees, "");
 		assertEquals(0, result);
 	}
-	
+
 	@Test
-	public void getAllEmpoyeesTest(){
-		when(employeeDAO.getAllEmpoyees()).thenReturn(employees);
-		List<Employee> result = employeeServiceImpl.getAllEmpoyees();
+	public void getEmployeesTest() {
+		when(employeeDAO.getEmployees()).thenReturn(employees);
+		List<Employee> result = employeeServiceImpl.getEmployees();
 		assertEquals(1, result.size());
-		
+
 	}
-	
+
 	@Test
-	public void getAllEmpoyeesNull(){
-		when(employeeDAO.getAllEmpoyees()).thenReturn(null);
-		List<Employee> result = employeeServiceImpl.getAllEmpoyees();
+	public void getAllEmpoyeesForNullCheckTest() {
+		when(employeeDAO.getEmployees()).thenReturn(null);
+		List<Employee> result = employeeServiceImpl.getEmployees();
 		assertEquals(null, result);
 	}
 }
-*/

@@ -18,14 +18,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDAO employeeDAO;
 
 	@Override
-	public List<Employee> getAllEmpoyees() {
-		List<Employee> domainObjects = employeeDAO.getAllEmpoyees();
+	public List<Employee> getEmployees() {
+		List<Employee> domainObjects = employeeDAO.getEmployees();
 		return domainObjects;
 	}
 
 	@Override
-	public int saveCsvEmployeeData(List<Employee> employees, String filePath) {
-		return employeeDAO.saveCsvEmployeeData(employees,filePath);
+	public int saveData(List<Employee> employees, String filePath) {
+		return employeeDAO.saveData(employees,filePath);
 	}
 
 }

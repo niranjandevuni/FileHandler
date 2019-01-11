@@ -1,4 +1,4 @@
-/*package com.prokarma.Test;
+package com.prokarma.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,7 +22,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.prokarma.csv.beans.Employee;
-import com.prokarma.csv.dao.EmpRowMapper;
+import com.prokarma.csv.configuration.EmpRowMapper;
 import com.prokarma.csv.dao.EmployeeDAOImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,11 +30,11 @@ public class EmployeeDAOImplTest {
 	List<Employee> employees = Arrays.asList(new Employee(1, "Mr", "Niranjan", "Devuni", "", 1100, "Male", "Uppal", "HYD", true));
 	private String filePath="src//main//resources//file//Employee.csv";
 	
-	@Mock
-	NamedParameterJdbcTemplate jdbcTemplate;
-	
 	@InjectMocks
 	private EmployeeDAOImpl employeeDAOImpl;
+	
+	@Mock
+	NamedParameterJdbcTemplate jdbcTemplate;
 	
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
@@ -46,33 +46,40 @@ public class EmployeeDAOImplTest {
 	}
 	
 	@Test
-	public void getAllEmpoyees(){
+	public void getAllEmpoyeesTest(){
 		
 		when(jdbcTemplate.query(anyString(), any(EmpRowMapper.class))).thenReturn(employees);
-		List<Employee> result = employeeDAOImpl.getAllEmpoyees();
+		List<Employee> result = employeeDAOImpl.getEmployees();
 		assertEquals(1, result.size());
 	}
 	
 	@Test
-	public void saveCsvEmployeeDataTest(){
+	public void getAllEmpoyeesForNullCheckTest(){
+		
+		when(jdbcTemplate.query(anyString(), any(EmpRowMapper.class))).thenReturn(null);
+		List<Employee> result = employeeDAOImpl.getEmployees();
+		assertEquals(null, result);
+	}
+	
+	@Test
+	public void saveDataTest(){
 		int[]  returnValue = {1,2,3};
 		
 		List<Map<String, Object>> batchValues = new ArrayList<>(employees.size());
 		when(jdbcTemplate.batchUpdate(anyString(), (Map<String, Object>[])any())).thenReturn(returnValue);
-		int result = employeeDAOImpl.saveCsvEmployeeData(employees,filePath);
+		int result = employeeDAOImpl.saveData(employees,filePath);
 		assertEquals(1, result);
 	}
 	
 	
 	@Test
-	public void saveCsvEmployeeDataException(){
+	public void saveDataForExceptionTest(){
 		int[]  returnValue = {1,2,3};
 		
 		List<Map<String, Object>> batchValues = new ArrayList<>(employees.size());
 		when(jdbcTemplate.batchUpdate(anyString(), (Map<String, Object>[])any())).thenThrow(NullPointerException.class);
-		int result = employeeDAOImpl.saveCsvEmployeeData(null,null);
+		int result = employeeDAOImpl.saveData(null,null);
 		assertEquals(0, result);
 	}
 	
 }
-*/

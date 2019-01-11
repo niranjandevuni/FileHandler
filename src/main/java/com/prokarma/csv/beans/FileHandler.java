@@ -22,7 +22,7 @@ public class FileHandler {
 	private final static Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	public boolean createCsv(String path, List<Employee> employees) {
-		if (!employees.isEmpty() && employees.size() > 0) {
+		if (employees !=null && !employees.isEmpty() && employees.size() > 0) {
 			try (FileWriter fileWriter = new FileWriter(path)) {
 				fileWriter.append(Constants.CSV_HEADER.getStringValue());
 				fileWriter.append('\n');
@@ -67,6 +67,7 @@ public class FileHandler {
 				while ((line = fileReader.readLine()) != null) {
 						String[] tokens = line.split(",");
 						if (tokens.length > 0) {
+							
 							Employee employee = new Employee(
 									Integer.parseInt(Configuration.checkNullCondition(tokens[Constants.EMP_ID.getIntValue()])),
 									Configuration.checkNullCondition(tokens[Constants.PREFIX.getIntValue()]),
@@ -78,6 +79,7 @@ public class FileHandler {
 									Configuration.checkNullCondition(tokens[Constants.STREET.getIntValue()]),
 									Configuration.checkNullCondition(tokens[Constants.CITY.getIntValue()]),
 									Boolean.parseBoolean(Configuration.checkNullCondition(tokens[Constants.ACTIVE.getIntValue()])));
+							employees=null;
 							employees.add(employee);
 						}
 				}
@@ -85,6 +87,7 @@ public class FileHandler {
 			} catch (IOException e) {
 				System.out.println("Reading CSV Error!" + e.getMessage());
 			}
+			
 		}
 		return null;
 	}

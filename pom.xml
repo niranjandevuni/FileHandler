@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.RC1</spring-cloud.version>
-		<springfox-swagger2.version>2.6.1</springfox-swagger2.version>
+		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 		<springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
 		<hamcrest-library.version>1.3</hamcrest-library.version>
 	</properties>

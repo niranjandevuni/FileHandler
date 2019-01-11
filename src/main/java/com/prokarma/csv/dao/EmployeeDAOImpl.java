@@ -2,8 +2,6 @@ package com.prokarma.csv.dao;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.prokarma.csv.beans.Employee;
+import com.prokarma.csv.configuration.EmpRowMapper;
 
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -25,24 +24,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Inject
 	NamedParameterJdbcTemplate jdbcTemplate;
 
-	public List<Employee> getAllEmpoyees() {
-		return jdbcTemplate.query("select * from employee",(ResultSet rs, int rowNum) -> {
-			Employee emp = new Employee();
-			emp.setEmpId(rs.getInt("EMPID"));
-			emp.setFirstName(rs.getString("FIRSTNAME"));
-			emp.setLastName(rs.getString("LASTNAME"));
-			emp.setMiddleName(rs.getString("MIDDLENAME"));
-			emp.setSalary(rs.getDouble("SALARY"));
-			emp.setGender(rs.getString("GENDER"));
-			emp.setStreet(rs.getString("STREET"));
-			emp.setCity(rs.getString("CITY"));
-			emp.setActive(rs.getBoolean("ACTIVE"));
-			return emp;
-		});
+	public List<Employee> getEmployees() {
+		return jdbcTemplate.query("select * from employee",new EmpRowMapper());
 	}
 	
 	@Override
-	public int saveCsvEmployeeData(List<Employee> employees, String filePath) {
+	public int saveData(List<Employee> employees, String filePath) {
 		try {
 			if (!employees.isEmpty() && employees.size() > 0 && filePath.length()>0) {
 				

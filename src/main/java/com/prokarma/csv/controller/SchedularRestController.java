@@ -15,14 +15,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import com.prokarma.csv.beans.Employee;
 import com.prokarma.csv.beans.FileHandler;
 import com.prokarma.csv.service.EmployeeService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags = {"Running Schedular operations for Employees using CSV file"})
 @RestController
 @RequestMapping(path = "/csv")
-public class RestControllerCSV {
+public class SchedularRestController {
 
 	private final static Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -35,11 +40,14 @@ public class RestControllerCSV {
 	@Inject
 	private EmployeeService employeeService;
 
+
+    @ApiOperation(value = "View a list of available employees", response = List.class)
 	@GetMapping("/employees")
 	public ResponseEntity<List<Employee>> getEmployees() {
-		return new ResponseEntity<List<Employee>>(employeeService.getAllEmpoyees(), HttpStatus.OK);
+		return new ResponseEntity<List<Employee>>(employeeService.getEmployees(), HttpStatus.OK);
 	}
 
+    @ApiOperation(value = "Create CSV file operation", response = String.class)
 	@PostMapping("/create_file")
 	public ResponseEntity<String> createCSVFile(@RequestBody List<Employee> employees) {
 		if (fileHandler.createCsv(filePath, employees))
@@ -49,10 +57,14 @@ public class RestControllerCSV {
 	}
 
 	// @Scheduled(fixedRate = 10000)
+    @ApiOperation(value = "Read and Save CSV file Opeation On DB ", response = List.class)
 	@GetMapping("/read_save_file")
-	public ResponseEntity<List<Employee>> readCsvData() {
+	public ResponseEntity<List<Employee>> saveCsvData() {
 		List<Employee> employees = fileHandler.readCsv(filePath);
-		employeeService.saveCsvEmployeeData(employees, filePath);
-		return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
+		if(employees !=null && employees.size()>0) {
+			employeeService.saveData(employees, filePath);
+			return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
+		}
+		return new ResponseEntity<List<Employee>>(employees, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

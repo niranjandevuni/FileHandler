@@ -5,7 +5,7 @@ import java.util.List;
 import com.prokarma.csv.beans.Employee;
 
 public interface EmployeeService {
-	public List<Employee> getAllEmpoyees();
+	public List<Employee> getEmployees();
 
-	public int saveCsvEmployeeData(List<Employee> employees, String filePath);
+	public int saveData(List<Employee> employees, String filePath);
 }
