@@ -19,10 +19,10 @@ import com.prokarma.csv.configuration.Constants;
 
 @Component
 public class FileHandler {
-	private final static Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+	private static final  Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	public boolean createCsv(String path, List<Employee> employees) {
-		if (employees !=null && !employees.isEmpty() && employees.size() > 0) {
+		if (employees !=null && !employees.isEmpty()) {
 			try (FileWriter fileWriter = new FileWriter(path)) {
 				fileWriter.append(Constants.CSV_HEADER.getStringValue());
 				fileWriter.append('\n');
@@ -51,7 +51,7 @@ public class FileHandler {
 				log.info("Write CSV successfully!");
 				return true;
 			} catch (IOException e) {
-				log.error("Writing CSV error!" + e.getMessage());
+				log.error("Writing CSV error! {}", e.getMessage());
 			}
 		}
 		return false;
@@ -59,10 +59,11 @@ public class FileHandler {
 
 	public List<Employee> readCsv(String filePath) {
 		File file = new File(filePath);
+		List<Employee> employees =null;
 		if (file.exists()) {
 			String line = "";
-			List<Employee> employees = new ArrayList<Employee>();
 			try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
+				employees = new ArrayList<>();
 				line = fileReader.readLine(); //for avoiding header
 				while ((line = fileReader.readLine()) != null) {
 						String[] tokens = line.split(",");
@@ -79,16 +80,15 @@ public class FileHandler {
 									Configuration.checkNullCondition(tokens[Constants.STREET.getIntValue()]),
 									Configuration.checkNullCondition(tokens[Constants.CITY.getIntValue()]),
 									Boolean.parseBoolean(Configuration.checkNullCondition(tokens[Constants.ACTIVE.getIntValue()])));
-							employees=null;
 							employees.add(employee);
 						}
 				}
 				return employees;
 			} catch (IOException e) {
-				System.out.println("Reading CSV Error!" + e.getMessage());
+				log.error("Reading CSV Error! {}", e.getMessage());
 			}
 			
 		}
-		return null;
+		return employees;
 	}
 }

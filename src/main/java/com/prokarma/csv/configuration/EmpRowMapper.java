@@ -7,9 +7,9 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.prokarma.csv.beans.Employee;
 
-public class EmpRowMapper implements RowMapper
+public class EmpRowMapper implements RowMapper<Employee>
 {
-	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Employee emp = new Employee();
 		emp.setEmpId(rs.getInt("EMPID"));
 		emp.setFirstName(rs.getString("FIRSTNAME"));

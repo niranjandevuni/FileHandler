@@ -26,7 +26,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -68,14 +67,14 @@ public class SchedularRestControllerTest {
 	}
 
 	@Test
-	public void getEmployeesTest() throws Exception {
+	public void testGetEmployees() throws Exception {
 		when(employeeService.getEmployees()).thenReturn(employees);
 		mockMvc.perform(get("/csv/employees").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(1)));
 	}
 
 	@Test
-	public void getEmployeesForNullCheckTest() throws Exception {
+	public void testGetEmployeesForNullCheck() throws Exception {
 		when(employeeService.getEmployees()).thenReturn(null);
 		mockMvc.perform(get("/csv/employees").accept(MediaType.APPLICATION_JSON))
 				.andExpect(content().string(IsEmptyString.isEmptyOrNullString()));
@@ -83,7 +82,7 @@ public class SchedularRestControllerTest {
 
 	
 	@Test
-	public void createCSVFileTest() throws Exception {
+	public void testCreateCSVFile() throws Exception {
 		when(fileHandler.createCsv(anyString(), any(List.class))).thenReturn(Boolean.TRUE);
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -94,7 +93,7 @@ public class SchedularRestControllerTest {
 	}
 
 	@Test
-	public void createCSVFileForNullCheckTest() throws Exception {
+	public void testCreateCSVFileForNullCheck() throws Exception {
 		when(fileHandler.createCsv(anyString(), any(List.class))).thenReturn(Boolean.FALSE);
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -105,7 +104,7 @@ public class SchedularRestControllerTest {
 	}
 
 	@Test
-	public void saveCsvDataTest() throws Exception {
+	public void testSaveCsvData() throws Exception {
 		when(fileHandler.readCsv(anyString())).thenReturn(employees);
 		when(employeeService.saveData(any(List.class), anyString())).thenReturn(1);
 		mockMvc.perform(get("/csv/read_save_file").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -113,7 +112,7 @@ public class SchedularRestControllerTest {
 	}
 	
 	@Test
-	public void saveCsvDataForNullCheckTest() throws Exception {
+	public void testSaveCsvDataForNullCheck() throws Exception {
 		when(fileHandler.readCsv(anyString())).thenReturn(employees);
 		when(employeeService.saveData(null, null)).thenReturn(0);
 		mockMvc.perform(get("/csv/read_save_file").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -121,7 +120,7 @@ public class SchedularRestControllerTest {
 	}
 	
 	@Test
-	public void saveCsvDataForNullCheckTestException() throws Exception {
+	public void testSaveCsvDataForException() throws Exception {
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).setControllerAdvice(new RestExceptionHandler())
 	            .build();
 		when(fileHandler.readCsv(anyString())).thenThrow(new RuntimeException());

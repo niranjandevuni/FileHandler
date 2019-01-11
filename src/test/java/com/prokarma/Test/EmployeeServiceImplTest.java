@@ -3,7 +3,6 @@ package com.prokarma.Test;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class EmployeeServiceImplTest {
 	private String filePath = "src//main//resources//file//Employee.csv";
 
 	@Test
-	public void saveDataTest() {
+	public void testSaveData() {
 
 		when(employeeDAO.saveData(employees, filePath)).thenReturn(1);
 		int result = employeeServiceImpl.saveData(employees, filePath);
@@ -46,7 +45,7 @@ public class EmployeeServiceImplTest {
 	}
 
 	@Test
-	public void saveDataForEmptyListTest() {
+	public void testSaveDataForEmptyList() {
 
 		when(employeeDAO.saveData(null, filePath)).thenReturn(0);
 		int result = employeeServiceImpl.saveData(null, filePath);
@@ -54,7 +53,7 @@ public class EmployeeServiceImplTest {
 	}
 
 	@Test
-	public void saveDataForEmptyFilePathTest() {
+	public void testSaveDataForEmptyFilePath() {
 
 		when(employeeDAO.saveData(employees, "")).thenReturn(0);
 		int result = employeeServiceImpl.saveData(employees, "");
@@ -62,7 +61,7 @@ public class EmployeeServiceImplTest {
 	}
 
 	@Test
-	public void getEmployeesTest() {
+	public void testGetEmployees() {
 		when(employeeDAO.getEmployees()).thenReturn(employees);
 		List<Employee> result = employeeServiceImpl.getEmployees();
 		assertEquals(1, result.size());
@@ -70,7 +69,7 @@ public class EmployeeServiceImplTest {
 	}
 
 	@Test
-	public void getAllEmpoyeesForNullCheckTest() {
+	public void testGetAllEmpoyeesForNullCheck() {
 		when(employeeDAO.getEmployees()).thenReturn(null);
 		List<Employee> result = employeeServiceImpl.getEmployees();
 		assertEquals(null, result);

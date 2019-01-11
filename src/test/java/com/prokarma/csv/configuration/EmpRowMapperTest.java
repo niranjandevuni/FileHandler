@@ -1,6 +1,6 @@
 package com.prokarma.csv.configuration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,13 +30,6 @@ public class EmpRowMapperTest {
         MockitoAnnotations.initMocks(this);
         
     }
-	
-	/*@Test
-	public void testMapRow() throws SQLException {
-			// resultSet is now a java.sql.ResultSet object, which you can pass to your legacy code
-		 MockResultSet resultSetMock = new MockResultSet("myMockRS");
-		assertEquals("test", empRowMapper.mapRow(products, 1));
-	}*/
 	
 	@Test
 	public void testDataExists() throws Exception {

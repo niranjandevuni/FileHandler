@@ -46,7 +46,7 @@ public class EmployeeDAOImplTest {
 	}
 	
 	@Test
-	public void getAllEmpoyeesTest(){
+	public void testGetAllEmpoyees(){
 		
 		when(jdbcTemplate.query(anyString(), any(EmpRowMapper.class))).thenReturn(employees);
 		List<Employee> result = employeeDAOImpl.getEmployees();
@@ -54,7 +54,7 @@ public class EmployeeDAOImplTest {
 	}
 	
 	@Test
-	public void getAllEmpoyeesForNullCheckTest(){
+	public void testGetAllEmpoyeesForNullCheck(){
 		
 		when(jdbcTemplate.query(anyString(), any(EmpRowMapper.class))).thenReturn(null);
 		List<Employee> result = employeeDAOImpl.getEmployees();
@@ -62,7 +62,7 @@ public class EmployeeDAOImplTest {
 	}
 	
 	@Test
-	public void saveDataTest(){
+	public void testSaveData(){
 		int[]  returnValue = {1,2,3};
 		
 		List<Map<String, Object>> batchValues = new ArrayList<>(employees.size());
@@ -73,7 +73,7 @@ public class EmployeeDAOImplTest {
 	
 	
 	@Test
-	public void saveDataForExceptionTest(){
+	public void testSaveDataForException(){
 		int[]  returnValue = {1,2,3};
 		
 		List<Map<String, Object>> batchValues = new ArrayList<>(employees.size());

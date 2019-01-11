@@ -1,7 +1,6 @@
 package com.prokarma.csv.beans;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,19 +29,19 @@ public class FileHandlerTest {
     }
 	
 	@Test
-	public void createCsvTest() {
+	public void testCreateCsv() {
 		assertEquals(true, fileHandler.createCsv(filePath, employees));
 
 	}
 
 	@Test
-	public void testCreateCsvForNullTest() {
+	public void testCreateCsvForNullCheck() {
 		assertEquals(false, fileHandler.createCsv(filePath, null));
 
 	}
 	
 	@Test
-	public void readCsvTest() {
+	public void testReadCsv() {
 		assertEquals(employees.size(), fileHandler.readCsv(filePath).size());
 	}
 
